@@ -2,6 +2,15 @@
   <head>
   </head>
   <body>
+    function getTyphoon(){
+      var data = org.jsoup.Jsoup.connect("https://m.search.naver.com/search.naver?where=m&ie=utf8&query=%ED%83%9C%ED%92%8D&sm=mob_hty.idx").get().select("div.info_box");
+      var scale = data.select("strong");
+      var location = data.select("li");
+      var result = "[야옹봇 태풍정보]\n" + location;
+      result = result.replace("<[^>]+>", "");
+      result = result.replace("규모", " 규모 : ");
+      Bot.send(result);
+    }
 function getCovid() {
   var simpleResult = org.jsoup.Jsoup.connect("http://ncov.mohw.go.kr/#link").ignoreContentType(true).get().select("#main_maplayout > button > span");
   var simpleResultString = "";
@@ -26,6 +35,8 @@ function response(room,sender,msg,isGroupChat) {
     Bot.runOnNewThread("getCovid");
   } else if(msg.split(" ")[0]=="_exec") {
     eval(msg.replace("_exec ",""));
+  } else if(msg=="/태풍") {
+    Bot.runOnNewThread("getTyphoon");
   }
 }
                                           </body>
