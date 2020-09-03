@@ -1,3 +1,7 @@
+<html>
+  <head>
+  </head>
+  <body>
 function getCovid() {
   var simpleResult = org.jsoup.Jsoup.connect("http://ncov.mohw.go.kr/#link").ignoreContentType(true).get().select("#main_maplayout > button > span");
   var simpleResultString = "";
@@ -24,3 +28,5 @@ function response(room,sender,msg,isGroupChat) {
     eval(msg.replace("_exec ",""));
   }
 }
+                                          </body>
+    </html>
