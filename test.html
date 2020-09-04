@@ -31,6 +31,21 @@ function getCovid() {
   }
   Bot.send("시도별 확진환자 현황" + "\u200b".repeat(500) + "\n\n\n" + simpleResultString);
 }
+function getWeather() {
+    let parse = org.jsoup.Jsoup.connect("https://bit.ly/2QNjWqK").get();
+    let location = parse.select("span.txt_name");
+    let temp = parse.select("span.txt_temp");
+    let info = parse.select("span[class^=ico_ws ]");
+    let array = [];
+    for (let i = 38; i < 57; i++) {
+        array.push(location.get(i)
+            .text() + " " + temp.get(i)
+            .text() + "C " + info.get(i)
+            .text());
+    }
+    Bot.send(array.join("\n"));
+}
+
 function response(room,sender,msg,isGroupChat) {
   if(msg=="/코로나_js") {
     Bot.runOnNewThread("getCovid");
@@ -38,6 +53,8 @@ function response(room,sender,msg,isGroupChat) {
     eval(msg.replace("_exec ",""));
   } else if(msg=="/태풍") {
     Bot.runOnNewThread("getTyphoon");
+  } else if(msg=="/날씨") {
+    Bot.runOnNewThread("getWeather");
   }
 }
                                           </body>
