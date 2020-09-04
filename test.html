@@ -32,7 +32,7 @@ function getCovid() {
   Bot.send("시도별 확진환자 현황" + "\u200b".repeat(500) + "\n\n\n" + simpleResultString);
 }
 function getWeather() {
-    let parse = org.jsoup.Jsoup.connect("https://bit.ly/2QNjWqK").get();
+    let parse = org.jsoup.Jsoup.connect("https://bit.ly/2QNjWqK").ignoreContentType(true).get();
     let location = parse.select("span.txt_name");
     let temp = parse.select("span.txt_temp");
     let info = parse.select("span[class^=ico_ws ]");
