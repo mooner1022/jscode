@@ -80,7 +80,7 @@ function response(room,sender,msg,isGroupChat) {
     getTyphoon();
   } else if(msg=="/날씨") {
     getWeather();
-  } else if(msg=="불쾌지수") {
+  } else if(msg=="/불쾌지수") {
     var getTempHumi = getTempHumidity("부천");
     var badindex = calcDiscomfortIndex(getTempHumi.Humidity,getTempHumi.Temp);
     var badnum = badindex.DIX;
