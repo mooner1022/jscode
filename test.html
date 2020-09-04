@@ -2,7 +2,16 @@
   <head>
   </head>
   <body>
-function getTyphoon(){ var data = org.jsoup.Jsoup.connect("https://m.search.naver.com/search.naver?where=m&ie=utf8&query=%ED%83%9C%ED%92%8D&sm=mob_hty.idx").ignoreContentType(true).get().select("div.info_box"); var scale = data.select("strong"); var location = data.select("li"); var result = "[야옹봇 태풍정보]\n" + location; result = result.replace(/<[^>]+>/g, ""); result = result.replace("규모", " 규모 : "); result=result.split("해상").join("해상\n");result=result.split("\n");var k=[];for(i in result){k.push(result[i].trim().replace(/&gt;/g,"")} Bot.send(k.join("\n"));}
+function getTyphoon(){ 
+  var data = org.jsoup.Jsoup.connect("https://m.search.naver.com/search.naver?where=m&ie=utf8&query=%ED%83%9C%ED%92%8D&sm=mob_hty.idx").ignoreContentType(true).get().select("div.info_box");
+  var scale = data.select("strong"); 
+  var location = data.select("li"); 
+  var result = "[야옹봇 태풍정보]\n" + location; 
+  result = result.replace(/<[^>]+>/g, ""); 
+  result = result.replace("규모", " 규모 : ");
+  result=result.split("해상").join("해상\n");
+  Bot.send(result);
+}
 function getCovid() {
   var simpleResult = org.jsoup.Jsoup.connect("http://ncov.mohw.go.kr/#link").ignoreContentType(true).get().select("#main_maplayout > button > span");
   var simpleResultString = "";
