@@ -52,7 +52,7 @@ function getTempHumidity(locale) {
   return ({Humidity : humidity, Temp : temp});
 }
 function calcDiscomfortIndex(temp, humi) {
-  var DI = parseInt(9/5*temp-0.55*(1-humi)*(9/5*temp-26)+32,10);
+  var DI = parseInt(9/5*temp-0.55*(1-humi)*(9/5*temp-26)+32,10)/10;
   var data2 = "";
   if(DI >= 80){
     data2 = "아우....! 꿉꿉해! 오늘은 불쾌지수가 "+DI+"% 라서 안아주기 싫은 날씨네요";
@@ -79,7 +79,7 @@ function response(room,sender,msg,isGroupChat) {
     var badindex = calcDiscomfortIndex(getTempHumi.Temp,getTempHumi.Humidity);
     var badnum = badindex.DIX;
     var badfeeldesa = badindex.DIXtext;
-    Bot.send(badnum+"% "+badfeeldesa);
+    Bot.send(badnum+"% \n"+badfeeldesa);
   }
 }
                                           </body>
