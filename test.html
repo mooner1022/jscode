@@ -47,8 +47,8 @@ function getWeather() {
 }
 function getTempHumidity(locale) {
   var get = org.jsoup.Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+locale+"+%EC%8A%B5%EB%8F%84").ignoreContentType(true).get();
-  var humidity = get.select("#docs > div > div:eq(1) > div:eq(1) > dev > div:eq(2) > div:eq(2) > div:eq(4) > ul > li > dl > dd > span").text();
-  var temp = get.select("#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box > div.weather_area._mainArea > div.today_area._mainTabContent > div.main_info > div > p > span.todaytemp");
+  var humidity = get.select("#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box > div.weather_area._mainArea > div.today_area._mainTabContent > div.table_info.bytime._todayWeatherByTime > div.info_list.humidity._tabContent > ul > li.on.now > dl > dd.weather_item._dotWrapper > span:nth-child(1)").text();
+  var temp = get.select("#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box > div.weather_area._mainArea > div.today_area._mainTabContent > div.main_info > div > p > span.todaytemp").text();
   return ({Humidity : humidity, Temp : temp});
 }
 function calcDiscomfortIndex(temp, humi) {
