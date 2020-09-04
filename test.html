@@ -76,7 +76,7 @@ function response(room,sender,msg,isGroupChat) {
     getWeather();
   } else if(msg=="/불쾌지수") {
     var getTempHumi = getTempHumidity("부천");
-    var badindex = calcDiscomfortIndex(getTempHumi.Humidity,getTempHumi.Temp);
+    var badindex = calcDiscomfortIndex(getTempHumi.Temp,getTempHumi.Humidity);
     var badnum = badindex.DIX;
     var badfeeldesa = badindex.DIXtext;
     Bot.send(badnum+"% "+badfeeldesa);
