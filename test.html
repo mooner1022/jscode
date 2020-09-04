@@ -48,7 +48,7 @@ function getTempHumidity(locale) {
   var get = org.jsoup.Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+locale+"+%EC%8A%B5%EB%8F%84").ignoreContentType(true).get();
   var humidity = get.select("#docs > div > div:eq(1) > div:eq(1) > dev > div:eq(2) > div:eq(2) > div:eq(4) > ul > li > dl > dd > span").text();
   var temp = get.select("#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box > div.weather_area._mainArea > div.today_area._mainTabContent > div.main_info > div > p > span.todaytemp");
-  return {Humidity : humidity, Temp : temp};
+  return ({Humidity : humidity, Temp : temp});
 }
 function calcDiscomfortIndex(temp, humi) {
   var DI = parseInt(9/5*temp-0.55*(1-humi)*(9/5*temp-26)+32,10);
@@ -62,7 +62,7 @@ function calcDiscomfortIndex(temp, humi) {
   } else if(DI < 68){
     data2 = "오늘은 불쾌지수가 "+data1+"% 라서 상쾌한 하루가 될거 같아요.";
   }
-  return {DIX : DI, DIXtext : data2};
+  return ({DIX : DI, DIXtext : data2});
 }
 function response(room,sender,msg,isGroupChat) {
   if(msg=="/코로나_js") {
