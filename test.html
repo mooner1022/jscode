@@ -45,16 +45,47 @@ function getWeather() {
     }
     Bot.send(array.join("\n"));
 }
-
+function getTempHumidity(locale) {
+  var get = org.jsoup.Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+locale+"+%EC%8A%B5%EB%8F%84").ignoreContentType(true).get();
+  var humidity = get.select("#docs > div > div:eq(1) > div:eq(1) > dev > div:eq(2) > div:eq(2) > div:eq(4) > ul > li > dl > dd > span").text();
+  var temp = get.select("#main_pack > div.sc.cs_weather._weather > div:nth-child(2) > div.weather_box > div.weather_area._mainArea > div.today_area._mainTabContent > div.main_info > div > p > span.todaytemp");
+  return {Humidity : humidity, Temp : temp};
+}
+function calcDiscomfortIndex(temp, humi) {
+var stressHigh = false;
+if (temp == undefined | temp == "") {
+return ("기온을 입력하세요."), false;
+}
+if (humi == undefined | humi == "") {
+return ("습도를 입력하세요."), false;
+}
+var DI = parseInt(9/5*temp-0.55*(1-humi)*(9/5*temp-26)+32);
+var data2 = "";
+if(DI >= 80){
+data2 = "아우....! 꿉꿉해! 오늘은 불쾌지수가 "+DI+"% 라서 안아주기 싫은 날씨네요";
+} else if(DI >= 75 && data1 < 80){
+data2 = "오늘은 불쾌지수가 "+data1+"% 나 돼서 왠지 짜증이 나네요...";
+} else if(DI >= 68 && data1 < 75){
+data2 = "오늘은 불쾌지수가 "+data1+"% 이지만 좋은 하루가 될거 같아요.";
+} else if(DI < 68){
+data2 = "오늘은 불쾌지수가 "+data1+"% 라서 상쾌한 하루가 될거 같아요.";
+};
+return {DIX : DI, DIXtext : data2};
 function response(room,sender,msg,isGroupChat) {
   if(msg=="/코로나_js") {
-    Bot.runOnNewThread("getCovid");
+    getCovid();
   } else if(msg.split(" ")[0]=="_exec") {
     eval(msg.replace("_exec ",""));
   } else if(msg=="/태풍") {
-    Bot.runOnNewThread("getTyphoon");
+    getTyphoon();
   } else if(msg=="/날씨") {
-    Bot.runOnNewThread("getWeather");
+    getWeather();
+  } else if(msg=="불쾌지수") {
+    var getTempHumi = getTempHumidity("부천");
+    var badindex = calcDiscomfortIndex(getTempHumi.Humidity,getTempHumi.Temp);
+    var badnum = badindex.DIX;
+    var badfeeldesa = badindex.DIXtext;
+    Bot.send(badnum+"% "+badfeeldesa);
   }
 }
                                           </body>
