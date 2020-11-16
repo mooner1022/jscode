@@ -69,7 +69,7 @@ function response(room,sender,msg,isGroupChat) {
   if(msg=="/코로나_js") {
     getCovid();
   } else if(msg.split(" ")[0]=="_exec") {
-    eval(msg.replace("_exec ",""));
+    Bot.send(eval(msg.replace("_exec ","")));
   } else if(msg=="/태풍") {
     getTyphoon();
   } else if(msg=="/날씨") {
